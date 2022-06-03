@@ -1,0 +1,8 @@
+streamlit
+numpy
+torchvision
+scikit-image
+torch
+pretrainedmodels
+predict
+matplotlib

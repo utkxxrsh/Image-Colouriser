@@ -1,0 +1,41 @@
+--- /usr/local/lib/python3.6/dist-packages/torch/nn/modules/loss.py
++++ /usr/local/lib/python3.6/dist-packages/torch/nn/modules/loss.py
+@@ -14,14 +14,14 @@
+     .. math::
+         \ell(x, y) =
+         \begin{cases}
+-            \operatorname{mean}(L), &  \text{if reduction} = \text{`mean';}\\
+-            \operatorname{sum}(L),  &  \text{if reduction} = \text{`sum'.}
++            \operatorname{mean}(L), &  \text{if reduction} = \text{'mean';}\\
++            \operatorname{sum}(L),  &  \text{if reduction} = \text{'sum'.}
+         \end{cases}
+ 
+     :math:`x` and :math:`y` are tensors of arbitrary shapes with a total
+     of :math:`n` elements each.
+ 
+-    The mean operation still operates over all the elements, and divides by :math:`n`.
++    The sum operation still operates over all the elements, and divides by :math:`n`.
+ 
+     The division by :math:`n` can be avoided if one sets ``reduction = 'sum'``.
+ 
+@@ -30,7 +30,7 @@
+             the losses are averaged over each loss element in the batch. Note that for
+             some losses, there are multiple elements per sample. If the field :attr:`size_average`
+             is set to ``False``, the losses are instead summed for each minibatch. Ignored
+-            when :attr:`reduce` is ``False``. Default: ``True``
++            when reduce is ``False``. Default: ``True``
+         reduce (bool, optional): Deprecated (see :attr:`reduction`). By default, the
+             losses are averaged or summed over observations for each minibatch depending
+             on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss per
+@@ -57,9 +57,9 @@
+     """
+     __constants__ = ['reduction']
+ 
+-    def __init__(self, size_average=None, reduce=None, reduction: str = 'mean') -> None:
++    def __init__(self, size_average=None, reduce=None, reduction='mean'):
+         super(MSELoss, self).__init__(size_average, reduce, reduction)
+ 
+-    def forward(self, input: Tensor, target: Tensor) -> Tensor:
++    def forward(self, input, target):
+         return F.mse_loss(input, target, reduction=self.reduction)
+ 
